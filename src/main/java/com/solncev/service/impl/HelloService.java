@@ -1,4 +1,4 @@
-package com.solncev.service;
+package com.solncev.service.impl;
 
 import org.springframework.stereotype.Service;
 

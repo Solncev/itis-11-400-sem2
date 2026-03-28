@@ -22,8 +22,17 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column
+    private String verificationCode;
+
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private boolean enabled;
 
     @ManyToMany
     @JoinTable(
@@ -63,5 +72,25 @@ public class User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 }
