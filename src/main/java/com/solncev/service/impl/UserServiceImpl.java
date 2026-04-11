@@ -2,18 +2,19 @@ package com.solncev.service.impl;
 
 import com.solncev.config.properties.MailProperties;
 import com.solncev.dto.CreateUserDto;
+import com.solncev.dto.UserDto;
 import com.solncev.model.User;
 import com.solncev.repository.UserRepository;
 import com.solncev.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,12 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.mailProperties = mailProperties;
         this.mailSender = mailSender;
+    }
+
+    @Override
+    public List<UserDto> getUsers() {
+        return userRepository.findAll().stream()
+                .map(u -> new UserDto(u.getUsername())).toList();
     }
 
     @Override
