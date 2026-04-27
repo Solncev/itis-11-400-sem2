@@ -44,6 +44,11 @@ mail:
   subject: Please verify your account
   content: "Dear $name, please follow the link below to verify your account: <a href=$url>VERIFY</a>"
 
+jwt:
+  secret:
+    access: and0LnNlY3JldC5hY2Nlc3Muand0LnNlY3JldC5hY2Nlc3M=
+    refresh: and0LnNlY3JldC5yZWZyZXNoLmp3dC5zZWNyZXQucmVmcmVzaA==
+
 
 logging:
   level:

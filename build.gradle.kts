@@ -13,6 +13,7 @@ version = "1.0-SNAPSHOT"
 
 val springSecurityVersion: String by project
 val postgresVersion: String by project
+val jwtVersion: String by project
 
 repositories {
     mavenCentral()
@@ -33,6 +34,10 @@ dependencies {
     liquibaseRuntime("org.liquibase:liquibase-core:4.33.0")
     liquibaseRuntime("org.postgresql:postgresql:$postgresVersion")
     liquibaseRuntime("info.picocli:picocli:4.6.3")
+
+    implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
+    implementation("io.jsonwebtoken:jjwt-impl:$jwtVersion")
+    implementation("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")

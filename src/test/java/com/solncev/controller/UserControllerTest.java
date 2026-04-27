@@ -1,6 +1,7 @@
 package com.solncev.controller;
 
 import com.solncev.dto.UserDto;
+import com.solncev.filter.JwtProvider;
 import com.solncev.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UserControllerTest {
 
     @MockitoBean
     private UserService userService;
+
+    @MockitoBean
+    private JwtProvider jwtProvider;
 
     @Test
     void getAllUsers() {
