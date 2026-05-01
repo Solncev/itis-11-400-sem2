@@ -1,4 +1,4 @@
-package com.solncev.model;
+package com.solncev.entity;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;

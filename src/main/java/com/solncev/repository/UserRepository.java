@@ -1,6 +1,6 @@
 package com.solncev.repository;
 
-import com.solncev.model.User;
+import com.solncev.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

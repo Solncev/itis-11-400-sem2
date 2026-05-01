@@ -1,6 +1,6 @@
 package com.solncev.filter;
 
-import com.solncev.model.User;
+import com.solncev.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

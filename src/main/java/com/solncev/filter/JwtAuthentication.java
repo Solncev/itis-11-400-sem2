@@ -1,6 +1,6 @@
 package com.solncev.filter;
 
-import com.solncev.model.Role;
+import com.solncev.entity.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 

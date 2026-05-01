@@ -4,7 +4,7 @@ import com.solncev.dto.security.JwtRefreshRequest;
 import com.solncev.dto.security.JwtRequest;
 import com.solncev.dto.security.JwtResponse;
 import com.solncev.filter.JwtProvider;
-import com.solncev.model.User;
+import com.solncev.entity.User;
 import com.solncev.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.security.auth.message.AuthException;

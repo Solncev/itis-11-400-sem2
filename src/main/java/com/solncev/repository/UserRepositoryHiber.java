@@ -1,6 +1,6 @@
 package com.solncev.repository;
 
-import com.solncev.model.User;
+import com.solncev.entity.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

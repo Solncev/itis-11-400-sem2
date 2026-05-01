@@ -1,6 +1,6 @@
 package com.solncev.controller;
 
-import com.solncev.model.User;
+import com.solncev.entity.User;
 import com.solncev.repository.UserRepository;
 import com.solncev.service.impl.HelloService;
 import org.springframework.http.MediaType;

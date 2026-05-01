@@ -3,7 +3,7 @@ package com.solncev.service.impl;
 import com.solncev.config.properties.MailProperties;
 import com.solncev.dto.CreateUserDto;
 import com.solncev.dto.UserDto;
-import com.solncev.model.User;
+import com.solncev.entity.User;
 import com.solncev.repository.UserRepository;
 import com.solncev.service.UserService;
 import jakarta.mail.MessagingException;

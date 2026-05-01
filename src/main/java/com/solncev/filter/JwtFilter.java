@@ -1,6 +1,6 @@
 package com.solncev.filter;
 
-import com.solncev.model.Role;
+import com.solncev.entity.Role;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

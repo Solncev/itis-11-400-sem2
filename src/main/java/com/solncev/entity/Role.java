@@ -1,4 +1,4 @@
-package com.solncev.model;
+package com.solncev.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,7 +1,7 @@
 package com.solncev.config;
 
 import com.solncev.filter.JwtFilter;
-import com.solncev.model.Role;
+import com.solncev.entity.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users").authenticated()
+                        .requestMatchers("/books/**", "/books").permitAll()
                         .requestMatchers("/hello").hasRole(Role.USER.getAuthority())
                         .requestMatchers("/admin/**").hasAnyRole(Role.ADMIN.getAuthority())
                         .requestMatchers("/error/**").permitAll()

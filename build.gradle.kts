@@ -5,6 +5,7 @@ plugins {
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.liquibase.gradle") version "2.2.2"
+    id("org.openapi.generator") version "7.10.0"
     id("jacoco")
 }
 
@@ -24,6 +25,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("io.swagger.core.v3:swagger-annotations:2.2.25")
     implementation("org.postgresql:postgresql:$postgresVersion")
     implementation("org.springframework.boot:spring-boot-starter-freemarker")
     implementation("org.springframework.boot:spring-boot-starter-mail")
@@ -65,8 +68,9 @@ tasks.withType<Test> {
 
 val jacocoExcludes = listOf(
     "**/com/solncev/dto/**",
-    "**/com/solncev/model/**",
-    "**/com/solncev/config/**"
+    "**/com/solncev/entity/**",
+    "**/com/solncev/config/**",
+    "**/com/solncev/api/generated/**"
 )
 
 tasks.jacocoTestReport {
@@ -102,4 +106,51 @@ tasks.jacocoTestCoverageVerification {
             exclude(jacocoExcludes)
         }
     }))
+}
+
+val openApiSpec = "$projectDir/src/main/resources/api.yaml"
+val openApiGeneratedDir: String = layout.buildDirectory.dir("generated").get().asFile.absolutePath
+
+openApiGenerate {
+    inputSpec.set(openApiSpec)
+    outputDir.set(openApiGeneratedDir)
+    generatorName.set("spring")
+    modelPackage.set("com.solncev.api.generated.dto")
+    apiPackage.set("com.solncev.api.generated.api")
+
+    configOptions.set(
+        mapOf(
+            "useJakartaEe" to "true",
+            "useSpringBoot3" to "true",
+            "library" to "spring-boot",
+            "interfaceOnly" to "true",
+            "skipDefaultInterface" to "true",
+            "useBeanValidation" to "true",
+            "useTags" to "true",
+            "dateLibrary" to "java8",
+            "openApiNullable" to "false",
+            "documentationProvider" to "none",
+            "useResponseEntity" to "true"
+        )
+    )
+    additionalProperties.set(
+        mapOf(
+            "generateApiTests" to "false",
+            "generateModelTests" to "false",
+            "generateApiDocumentation" to "false",
+            "generateModelDocumentation" to "false"
+        )
+    )
+}
+
+sourceSets {
+    getByName("main") {
+        java {
+            srcDir(layout.buildDirectory.dir("generated/src/main/java"))
+        }
+    }
+}
+
+tasks.named("compileJava") {
+    dependsOn("openApiGenerate")
 }
