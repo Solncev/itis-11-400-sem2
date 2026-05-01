@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserService {
     void createUser(CreateUserDto createUserDto);
     List<UserDto> getUsers();
+    boolean verify(String verificationCode);
 }

@@ -45,7 +45,7 @@ public class UserControllerTest {
 
         mockMvc.perform(get("/users")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .with(user("user").roles("USER")))
+                        .with(user("admin").roles("ADMIN")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$", hasSize(1)))

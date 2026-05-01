@@ -4,7 +4,6 @@ import com.solncev.dto.security.JwtRefreshRequest;
 import com.solncev.dto.security.JwtRequest;
 import com.solncev.dto.security.JwtResponse;
 import com.solncev.service.security.AuthService;
-import jakarta.security.auth.message.AuthException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -27,12 +26,12 @@ public class AuthController {
     }
 
     @PostMapping("token")
-    public ResponseEntity<JwtResponse> token(@RequestBody JwtRefreshRequest jwtRequest) throws AuthException {
+    public ResponseEntity<JwtResponse> token(@RequestBody JwtRefreshRequest jwtRequest) {
         return ResponseEntity.ok(authService.token(jwtRequest));
     }
 
     @PostMapping("refresh")
-    public ResponseEntity<JwtResponse> refresh(@RequestBody JwtRefreshRequest jwtRequest) throws AuthException {
+    public ResponseEntity<JwtResponse> refresh(@RequestBody JwtRefreshRequest jwtRequest) {
         return ResponseEntity.ok(authService.refresh(jwtRequest));
     }
 }

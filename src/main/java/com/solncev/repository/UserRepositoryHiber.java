@@ -24,6 +24,6 @@ public class UserRepositoryHiber {
         } catch (HibernateException e) {
             session = sessionFactory.openSession();
         }
-        return session.createQuery("from User").list();
+        return session.createQuery("from User", User.class).getResultList();
     }
 }

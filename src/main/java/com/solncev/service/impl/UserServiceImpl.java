@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -50,6 +51,18 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         sendVerificationMail(createUserDto, verificationCode);
+    }
+
+    @Override
+    @Transactional
+    public boolean verify(String verificationCode) {
+        return userRepository.findByVerificationCode(verificationCode)
+                .map(user -> {
+                    user.setEnabled(true);
+                    user.setVerificationCode(null);
+                    return true;
+                })
+                .orElse(false);
     }
 
     private void sendVerificationMail(CreateUserDto createUserDto, String verificationCode) {

@@ -7,8 +7,8 @@ import com.solncev.filter.JwtProvider;
 import com.solncev.entity.User;
 import com.solncev.repository.UserRepository;
 import io.jsonwebtoken.Claims;
-import jakarta.security.auth.message.AuthException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,17 +38,21 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByUsername(jwtRequest.login())
                 .orElseThrow(() -> new UsernameNotFoundException(jwtRequest.login()));
 
-        if (passwordEncoder.matches(jwtRequest.password(), user.getPassword())) {
-            String accessToken = jwtProvider.generateAccessToken(user);
-            String refreshToken = jwtProvider.generateRefreshToken(user);
-            refreshStorage.put(jwtRequest.login(), refreshToken);
-            return new JwtResponse(accessToken, refreshToken);
+        if (!passwordEncoder.matches(jwtRequest.password(), user.getPassword())) {
+            throw new BadCredentialsException(jwtRequest.login());
         }
-        throw new BadCredentialsException(jwtRequest.login());
+        if (!user.isEnabled()) {
+            throw new DisabledException("Account is not verified");
+        }
+
+        String accessToken = jwtProvider.generateAccessToken(user);
+        String refreshToken = jwtProvider.generateRefreshToken(user);
+        refreshStorage.put(jwtRequest.login(), refreshToken);
+        return new JwtResponse(accessToken, refreshToken);
     }
 
     @Override
-    public JwtResponse refresh(JwtRefreshRequest jwtRefreshRequest) throws AuthException {
+    public JwtResponse refresh(JwtRefreshRequest jwtRefreshRequest) {
         if (jwtProvider.validateRefreshToken(jwtRefreshRequest.token())) {
             Claims claims = jwtProvider.getRefreshClaims(jwtRefreshRequest.token());
             String username = claims.getSubject();
@@ -62,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
                 return new JwtResponse(accessToken, newRefresh);
             }
         }
-        throw new AuthException("Invalid refresh token");
+        throw new BadCredentialsException("Invalid refresh token");
     }
 
     @Override
